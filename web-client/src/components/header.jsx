@@ -45,7 +45,7 @@ export default function Header({ toggleSidebar }) {
       >
         <FaUserCircle className="text-white text-3xl" />
         <span className="text-white font-semibold">
-          John Doe
+          User
         </span>
       </div>
     </div>

@@ -15,15 +15,19 @@ export default function AddExpenses({ isOpen, onClose, onAddExpense }) {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    onAddExpense({
-      ...form,
+    // Send to parent handler which posts to backend and updates state
+    await onAddExpense({
+      name: form.name,
       amount: Number(form.amount),
-      id: Date.now(),
+      category: form.category,
+      date: form.date || new Date(),
+      paymentMode: form.paymentMode || "Cash",
     });
 
+    // Reset form
     setForm({
       name: "",
       amount: "",
@@ -48,14 +52,32 @@ export default function AddExpenses({ isOpen, onClose, onAddExpense }) {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input name="name" placeholder="Expense Name" className="border px-3 py-2"
-            value={form.name} onChange={handleChange} required />
+          <input
+            name="name"
+            placeholder="Expense Name"
+            className="border px-3 py-2"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
 
-          <input name="amount" type="number" placeholder="Amount" className="border px-3 py-2"
-            value={form.amount} onChange={handleChange} required />
+          <input
+            name="amount"
+            type="number"
+            placeholder="Amount"
+            className="border px-3 py-2"
+            value={form.amount}
+            onChange={handleChange}
+            required
+          />
 
-          <select name="category" className="border px-3 py-2"
-            value={form.category} onChange={handleChange} required>
+          <select
+            name="category"
+            className="border px-3 py-2"
+            value={form.category}
+            onChange={handleChange}
+            required
+          >
             <option value="">Category</option>
             <option>Food</option>
             <option>Transport</option>
@@ -63,11 +85,22 @@ export default function AddExpenses({ isOpen, onClose, onAddExpense }) {
             <option>Others</option>
           </select>
 
-          <input name="date" type="date" className="border px-3 py-2"
-            value={form.date} onChange={handleChange} required />
+          <input
+            name="date"
+            type="date"
+            className="border px-3 py-2"
+            value={form.date}
+            onChange={handleChange}
+            required
+          />
 
-          <input name="paymentMode" placeholder="Payment Mode" className="border px-3 py-2"
-            value={form.paymentMode} onChange={handleChange} />
+          <input
+            name="paymentMode"
+            placeholder="Payment Mode"
+            className="border px-3 py-2"
+            value={form.paymentMode}
+            onChange={handleChange}
+          />
 
           <button className="bg-green-500 text-white py-2 rounded">
             Add Expense

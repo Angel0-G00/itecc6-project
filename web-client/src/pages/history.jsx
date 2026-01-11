@@ -16,22 +16,18 @@ export default function History({ expenses = [] }) {
         <div className="bg-white rounded-xl shadow divide-y">
           {expenses.map((e) => (
             <div
-              key={e.id}
+              key={e._id} // use _id from MongoDB
               className="flex justify-between items-center p-4"
             >
               <div>
-                <p className="font-bold text-green-800">
-                  {e.name}
-                </p>
+                <p className="font-bold text-green-800">{e.name}</p>
                 <p className="text-sm text-gray-500">
-                  {e.date} • {e.category} • {e.paymentMode || "Cash"}
+                  {new Date(e.date).toLocaleDateString()} • {e.category} • {e.paymentMode || "Cash"}
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="font-bold text-red-600">
-                  ₱{e.amount}
-                </span>
+                <span className="font-bold text-red-600">₱{e.amount}</span>
                 <FaEllipsisV className="text-gray-500 cursor-pointer" />
               </div>
             </div>
